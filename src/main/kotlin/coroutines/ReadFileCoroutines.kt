@@ -8,9 +8,10 @@ import utils.FileUtility
 @OptIn(DelicateCoroutinesApi::class)
 class ReadFileCoroutines {
     private val fileName = "D:\\\\KtFile\\inventory.txt"
-    fun read() {
+    fun read(callback : (String) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
-            FileUtility.readFile(filename = fileName)
+            val result = FileUtility.readFile(filename = fileName)
+            callback(result)
         }
     }
 }
