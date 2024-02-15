@@ -14,8 +14,7 @@ class FileUtility {
             }
         }
         // write new text to file
-        suspend fun write(filename : String,text : String) {
-            File(filename).writeText("$text\r\n")
-        }
+        suspend fun write(filename : String,text : String) = File(filename).writeText("$text\r\n")
+
     }
 }
