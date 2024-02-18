@@ -1,19 +1,25 @@
 import app.Actions
 import app.Menu
+import coroutines.ReadFileCoroutines
+import coroutines.WriteFileCoroutines
 import handler.ProductHandler
 import java.lang.Exception
 
 fun main() {
-    val handler = ProductHandler()
-
     try {
+        val handler = ProductHandler()
+        val writer = WriteFileCoroutines()
+        val reader = ReadFileCoroutines()
+
+        reader.read { handler.fromJson(it) }
+
         while (true) {
             when(Menu.getMenu()) {
                 1 -> { handler.showAllProduct() }
-                2 -> { Actions.addProduct(handler) }
-                3 -> { Actions.increaseProduct(handler) }
-                4 -> { Actions.decreaseProduct(handler) }
-                5 -> { Actions.deleteProduct(handler) }
+                2 -> { Actions.addProduct(handler,writer) }
+                3 -> { Actions.increaseProduct(handler,writer) }
+                4 -> { Actions.decreaseProduct(handler,writer) }
+                5 -> { Actions.deleteProduct(handler,writer) }
                 0 -> {
                     println("با موفقیت خارج شدید")
                     return
@@ -25,4 +31,5 @@ fun main() {
     }
 
 
+    Thread.sleep(1000)
 }

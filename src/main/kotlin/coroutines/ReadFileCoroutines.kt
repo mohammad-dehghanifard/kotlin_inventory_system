@@ -10,8 +10,7 @@ class ReadFileCoroutines {
     private val fileName = "D:\\\\KtFile\\inventory.txt"
     fun read(callback : (String) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
-            val result = FileUtility.readFile(filename = fileName)
-            callback(result)
+            FileUtility.readFile(filename = fileName,callback)
         }
     }
 }

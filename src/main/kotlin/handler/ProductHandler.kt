@@ -1,5 +1,8 @@
 package handler
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import entities.Product
+import java.lang.reflect.Type
 
 class ProductHandler {
     private val productList  = mutableListOf<Product>()
@@ -12,6 +15,20 @@ class ProductHandler {
         } else {
             println("محصولی جهت نمایش وجود ندارد!")
         }
+    }
+
+    fun toJson(): String {
+        val gson = Gson()
+        return gson.toJson(productList)
+    }
+
+    fun fromJson(json : String) : List<Product> {
+        val gson = Gson()
+        val listType : Type = object  : TypeToken<MutableList<Product>>() {}.type
+        val result = gson.fromJson<List<Product>>(json,listType)
+        productList.clear()
+        productList.addAll(result)
+        return productList
     }
 
     fun removeProduct(sky : String) { productList.removeIf { it.sku.lowercase() == sky.lowercase() } }

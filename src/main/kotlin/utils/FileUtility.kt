@@ -8,14 +8,9 @@ class FileUtility {
             File(filename).appendText("$text\r\n")
         }
         // read text
-        suspend fun readFile(filename:String) : String {
-            return if(File(filename).exists()) {
-                var result = ""
-                File(filename).forEachLine { result+= "$it\n" }
-                result
-            } else {
-                println("فایل مورد نظر وجود ندارد، لطفا یک فایل جدید ایجاد کنید.")
-                ""
+        suspend fun readFile(filename: String, callback: (String) -> Unit)  {
+             if(File(filename).exists()) {
+                File(filename).forEachLine { callback(it) }
             }
         }
         // write new text to file
